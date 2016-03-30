@@ -1,0 +1,30 @@
+{
+  "name": "imooc_frontend",
+  "version": "0.1.0",
+  "authors": [
+    "xxr <xianren_xiong@163.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "vendor/assets",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.6",
+    "requirejs": "~2.1.20",
+    "jquery": "~2.1.4"
+  },
+  "homepage": "https://github.com/FrankXiong/imooc",
+  "description": "",
+  "main": "",
+  "moduleType": [],
+  "keywords": [
+    "movie",
+    "imooc"
+  ],
+  "private": true
+}

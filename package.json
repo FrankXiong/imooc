@@ -1,0 +1,40 @@
+{
+  "name": "imooc",
+  "author": "xiong xianren",
+  "version": "0.1.0",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FrankXiong/imooc.git"
+  },
+  "keywords": [
+    "node",
+    "imooc"
+  ],
+  "scripts": {
+    "pretest": "npm install",
+    "test": "node node_modules/karma/bin/karma start test/karma.conf.js",
+    "test-single-run": "node node_modules/karma/bin/karma start test/karma.conf.js  --single-run",
+    "preupdate-webdriver": "npm install",
+    "update-webdriver": "webdriver-manager update",
+    "preprotractor": "npm run update-webdriver",
+    "protractor": "protractor test/protractor-conf.js",
+    "update-index-async": "node -e \"require('shelljs/global'); sed('-i', /\\/\\/@@NG_LOADER_START@@[\\s\\S]*\\/\\/@@NG_LOADER_END@@/, '//@@NG_LOADER_START@@\\n' + cat('bower_components/angular-loader/angular-loader.min.js') + '\\n//@@NG_LOADER_END@@', 'app/index-async.html');\""
+  },
+  "description": "慕课网Node课程项目",
+  "bugs": {
+    "url": "https://github.com/FrankXiong/imooc/issues"
+  },
+  "homepage": "https://github.com/FrankXiong/imooc#readme",
+  "main": "app.js",
+  "dependencies": {
+    "bcrypt": "^0.8.5",
+    "body-parser": "^1.15.0",
+    "express": "^4.13.4",
+    "jade": "^1.11.0",
+    "moment": "^2.12.0",
+    "mongoose": "^4.4.10",
+    "underscore": "^1.8.3"
+  },
+  "license": "ISC"
+}

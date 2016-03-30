@@ -1,14 +1,23 @@
 // detail page
 var Movie = require('../models/movie');
+var Comment = require('../models/comment');
 var _ = require('underscore');
 
 exports.detail = function(req,res){
     var id = req.params.id;
     Movie.findById(id,function(err,movie){
-        res.render('detail',{
-            title:movie.title,
-            movie:movie
-        });
+        Comment
+            .find({movie:id})
+            // populate()根据from的objectId拿到user.name
+            .populate('from','name')
+            .exec(function(err,comments){
+                console.log(comments)
+                res.render('detail',{
+                    title:movie.title,
+                    movie:movie,
+                    comments:comments
+                })
+            })
     });
 }
 

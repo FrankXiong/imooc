@@ -1,6 +1,7 @@
-var Index = require('../app/controllers/index');
-var Movie = require('../app/controllers/movie');
-var User = require('../app/controllers/user');
+var Index = require('../app/controllers/index')
+var Movie = require('../app/controllers/movie')
+var User = require('../app/controllers/user')
+var Comment = require('../app/controllers/comment')
 
 module.exports = function(app){
     // pre handler user
@@ -23,9 +24,11 @@ module.exports = function(app){
 
     app.get('/movie/:id',Movie.detail)
     app.get('/admin/movie/add',User.signinRequired,User.adminRequired,Movie.add)
-    app.get('/admin/update/:id',User.signinRequired,User.adminRequired,Movie.update)
+    app.get('/admin/movie/update/:id',User.signinRequired,User.adminRequired,Movie.update)
     app.post('/admin/movie',User.signinRequired,User.adminRequired,Movie.save)
     app.delete('/admin/movie/list',User.signinRequired,User.adminRequired,Movie.del)
     app.get('/admin/movie/list',User.signinRequired,User.adminRequired,Movie.list)
+
+    app.post('/user/comment',User.signinRequired,Comment.save)
 
 }

@@ -5,3 +5,29 @@
 .input-search{
     margin-top: 12px;
 }
+.footer{
+    margin-top: 100px;
+    margin-bottom: 0;
+}
+.comment-container{
+    margin-top: 40px;
+}
+.movie-info{
+    padding: 10px;
+}
+.movie-info dt,.movie-info dd{
+    padding: 5px 0;
+}
+.movie-info dt{
+    width: 70px;
+    text-align: left;
+}
+.movie-info dd{
+    margin-left: 90px;
+}
+.comment-container{
+    width: 720px;
+}
+.comment-container .media-list{
+    margin-top: 40px;
+}

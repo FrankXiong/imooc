@@ -39,7 +39,6 @@ UserSchema.pre('save',function(next){
             next()
         })
     })
-    next()
 });
 
 UserSchema.methods = {

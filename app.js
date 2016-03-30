@@ -15,7 +15,6 @@ app.set('view engine','jade');
 
 app.use(express.static(path.join(__dirname,'dist/static')));
 app.use(bodyParser.urlencoded({extended:true}));
-// app.use(bodyParser.json());
 
 app.locals.moment = require('moment');
 
@@ -64,7 +63,59 @@ app.get('/admin/movie',function(req,res){
     });
 });
 
-// amdin post
+// signin page
+app.get('/signin',function(req,res){
+    res.render('signin',{
+        title:'登录'
+    })
+});
+
+// signin page
+app.get('/signup',function(req,res){
+    res.render('signup',{
+        title:'注册'
+    })
+});
+
+//userlist page
+app.get('/admin/user/list',function(req,res){
+    User.fetch(function(err,users){
+        if(err) console.log(err)
+        res.render('user-list',{
+            title:'用户列表页',
+            users:users
+        })  
+    })
+})
+
+// admin movie list page
+app.get('/admin/movie/list/',function(req,res){
+    Movie.fetch(function(err,movies){
+        if(err){
+            console.log(err)
+        }
+        res.render('movie-list',{
+            title:'后台电影列表页',
+            movies:movies
+        })
+    });
+});
+
+//admin movie update page
+app.get('/admin/movie/update/:id',function(req,res){
+    var id = req.params.id;
+
+    if(id){
+        Movie.findById(id,function(err,movie){
+            res.render('admin',{
+                title:'后台电影更新页',
+                movie:movie
+            })
+        })
+    }
+});
+
+// amdin movie post
 app.post('/admin/movie/new',function(req,res){
     var id = req.body.movie._id;
     var movieObj = req.body.movie;
@@ -106,37 +157,24 @@ app.post('/admin/movie/new',function(req,res){
 
 });
 
-// list page
-app.get('/admin/list/',function(req,res){
-    Movie.fetch(function(err,movies){
-        if(err){
-            console.log(err)
-        }
-        res.render('list',{
-            title:'后台列表页',
-            movies:movies
-        })
-    });
-});
-
-app.get('/admin/update/:id',function(req,res){
-    var id = req.params.id;
-
-    if(id){
-        Movie.findById(id,function(err,movie){
-            res.render('admin',{
-                title:'后台更新页',
-                movie:movie
-            })
-        })
-    }
-});
-
-// list delete movie
-app.delete('/admin/list',function(req,res){
+// movielist delete 
+app.delete('/admin/movie/list',function(req,res){
     var id = req.query.id
     if(id){
         Movie.remove({_id:id},function(err,movie){
+            if(err){
+                console.log(err)
+            }
+            res.json({success:1});
+        })
+    }
+})
+
+// userlist delete
+app.delete('/admin/user/list',function(req,res){
+    var id = req.query.id
+    if(id){
+        User.remove({_id:id},function(err,movie){
             if(err){
                 console.log(err)
             }
@@ -149,46 +187,51 @@ app.delete('/admin/list',function(req,res){
 app.post('/user/signup',function(req,res){
     // 表单提交的是一个user对象
     var _user = req.body.user
+    var name = _user.name
     console.log(_user)
-    var user = new User(_user)
 
-    User.find({name:_user.name},function(err,user){
+    // findOne查找匹配到的第一个user
+    User.findOne({name:name},function(err,user){
         if(err) console.log(err)
 
         if(user){
-            res.redirect('/admin/userlist')
+            // req.flash('error','用户名已存在！')
+            return res.redirect('/admin/user/list')
         }else{
+            var user = new User(_user)
             user.save(function(err,user){
                 if(err) console.log(err)
-
+                // req.flash('success','注册成功！')
                 res.redirect('/')
             })
         }
-    })
-
-    
+    })  
 })
 
-//userlist page
-app.get('/admin/userlist',function(req,res){
-    User.fetch(function(err,users){
+// signin
+app.post('/user/signin',function(req,res){
+    var _user = req.body.user
+    var name = _user.name
+    var password = _user.password
+
+    User.findOne({name:name},function(err,user){
         if(err) console.log(err)
-        res.render('user-list',{
-            title:'用户列表页',
-            users:users
-        })  
-    })
-})
-
-// userlist delete movie
-app.delete('/admin/userlist',function(req,res){
-    var id = req.query.id
-    if(id){
-        User.remove({_id:id},function(err,movie){
-            if(err){
-                console.log(err)
+        //用户不存在 
+        if(!user){
+            // req.flash('success','用户名不存在')
+            return res.redirect('/signin')
+        }
+        //调用comparePassword方法比对密码
+        user.comparePassword(password,function(err,isMatch){
+            if(err) console.log(err)
+            if(isMatch){
+                console.log('password is matched')
+                return res.redirect('/')
+            }else{
+                console.log('password is not matched')
+                return res.redirect('/')
             }
-            res.json({success:1});
+
         })
-    }
+    })
 })

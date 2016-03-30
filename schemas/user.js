@@ -8,8 +8,7 @@ var UserSchema = new mongoose.Schema({
         unique:true
     },
     password:{
-        type:String,
-        unique:true
+        type:String
     },
     meta:{
         createAt:{
@@ -42,6 +41,16 @@ UserSchema.pre('save',function(next){
     })
     next()
 });
+
+UserSchema.methods = {
+    comparePassword:function(_password,cb){
+        bcrypt.compare(_password,this.password,function(err,isMatch){
+            if(err) return cb(err)
+
+            cb(null,isMatch)
+        })
+    }
+}
 
 UserSchema.statics = {
     fetch:function(cb){

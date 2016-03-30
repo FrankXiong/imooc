@@ -19,11 +19,13 @@ exports.signup = function(req,res){
 
     // findOne查找匹配到的第一个user
     User.findOne({name:name},function(err,user){
-        if(err) console.log(err)
+        if(err){
+            console.log(err)
+        } 
 
         if(user){
             console.log('error:用户名已存在！')
-            return res.redirect('/signup')
+            return res.redirect('/signin')
         }else{
             var user = new User(_user)
             user.save(function(err,user){
@@ -58,7 +60,7 @@ exports.signin = function(req,res){
                 return res.redirect('/')
             }else{
                 console.log('error:密码错误！')
-                return res.redirect('/')
+                return res.redirect('/signin')
             }
 
         })
@@ -98,4 +100,23 @@ exports.showSignupPage = function(req,res){
     res.render('signup',{
         title:'注册'
     })
+}
+
+// midware for user
+exports.signinRequired = function(req,res,next){
+    var user = req.session.user
+    // 用户未登录，重定向到登录页面
+    if(!user){
+        res.redirect('/signin')
+    }
+    next()
+}
+// midware for user
+exports.adminRequired = function(req,res,next){
+    var user = req.session.user
+    // 用户权限不够，重定向到登录页面
+    if(user.role < 10){
+        res.redirect('/signin')
+    }
+    next()
 }

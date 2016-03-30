@@ -18,14 +18,14 @@ module.exports = function(app){
     app.post('/user/signin',User.signin)
     app.post('/user/signup',User.signup)
     app.get('/logout',User.logout)
-    app.get('/admin/user/list',User.list)
-    app.delete('/admin/user/list',User.del)
+    app.get('/admin/user/list',User.signinRequired,User.adminRequired,User.list)
+    app.delete('/admin/user/list',User.signinRequired,User.adminRequired,User.del)
 
     app.get('/movie/:id',Movie.detail)
-    app.get('/admin/movie/add',Movie.add)
-    app.get('/admin/update/:id',Movie.update)
-    app.post('/admin/movie',Movie.save)
-    app.delete('/admin/movie/list',Movie.del)
-    app.get('/admin/movie/list',Movie.list)
+    app.get('/admin/movie/add',User.signinRequired,User.adminRequired,Movie.add)
+    app.get('/admin/update/:id',User.signinRequired,User.adminRequired,Movie.update)
+    app.post('/admin/movie',User.signinRequired,User.adminRequired,Movie.save)
+    app.delete('/admin/movie/list',User.signinRequired,User.adminRequired,Movie.del)
+    app.get('/admin/movie/list',User.signinRequired,User.adminRequired,Movie.list)
 
 }

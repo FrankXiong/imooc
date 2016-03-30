@@ -10,6 +10,15 @@ var UserSchema = new mongoose.Schema({
     password:{
         type:String
     },
+    role:{
+        type:Number,
+        // 0:normal user
+        // 1:verified user
+        // >=10:admin
+        // >=100:super admin
+        // 默认为普通用户
+        default:0
+    },
     meta:{
         createAt:{
             type:Date,

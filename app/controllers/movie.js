@@ -1,6 +1,7 @@
 // detail page
 var Movie = require('../models/movie');
 var Comment = require('../models/comment');
+var Category = require('../models/category')
 var _ = require('underscore');
 
 exports.detail = function(req,res){
@@ -24,19 +25,13 @@ exports.detail = function(req,res){
 
 // admin add movie page
 exports.add = function(req,res){
-    res.render('admin',{
-        title:'后台录入页',
-        movie:{
-            title:'',
-            director:'',
-            country:'',
-            language:'',
-            year:'',
-            poster:'',
-            flash:'',
-            summary:''
-        }
-    });
+    Category.find({},function(err,categories){
+        res.render('movie-add',{
+            title:'后台录入页',
+            movie:{},
+            categories:categories
+        })
+    })
 }
 
 // admin movie list page
@@ -58,9 +53,12 @@ exports.update = function(req,res){
 
     if(id){
         Movie.findById(id,function(err,movie){
-            res.render('admin',{
-                title:'后台电影更新页',
-                movie:movie
+            Category.find({},function(err,categories){
+                res.render('movie-add',{
+                    title:'后台电影更新页',
+                    movie:movie,
+                    categories:categories
+                })
             })
         })
     }
@@ -71,9 +69,8 @@ exports.save = function(req,res){
     var id = req.body.movie._id;
     var movieObj = req.body.movie;
     var _movie;
-    // console.log(req.headers['content-type']);
 
-    if(id !== 'undefined'){
+    if(id){
         Movie.findById(id,function(err,movie){
             if(err){
                 console.log(err)
@@ -87,22 +84,22 @@ exports.save = function(req,res){
             })
         })
     }else{
-        _movie = new Movie({
-            title:movieObj.title,
-            director:movieObj.director,
-            language:movieObj.language,
-            country:movieObj.country,
-            summary:movieObj.summary,
-            flash:movieObj.flash,
-            poster:movieObj.poster,
-            year:movieObj.year
-        })
+        _movie = new Movie(movieObj)
+
+        var categoryId = movieObj.category
+        var categoryName  = movieObj.categoryName 
 
         _movie.save(function(err,movie){
             if(err){
                 console.log(err)
             }
-            res.redirect('/movie/'+movie._id)
+
+            Category.findById(categoryId,function(err,category){
+                category.movies.push(movie._id)
+                category.save(function(err,category){
+                    res.redirect('/movie/' + movie._id)
+                })
+            })
         })
     }
 }

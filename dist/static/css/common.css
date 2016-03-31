@@ -1,3 +1,11 @@
+body{
+  position:absolute;
+  min-height: 100%;
+  width: 100%;
+}
+.main{
+  margin-bottom: 100px;
+}
 .clearfix:after { 
   content: ".";
   display: block;
@@ -27,6 +35,9 @@ form{
 .footer{
     margin-top: 100px;
     margin-bottom: 0;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
 }
 .comment-container{
     margin-top: 40px;
@@ -50,7 +61,9 @@ form{
 .comment-container .media-list{
     margin-top: 50px;
 }
-
 #replyCollapse .well{
   padding-bottom: 0;
+}
+.category-group input{
+  float: left;
 }

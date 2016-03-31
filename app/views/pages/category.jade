@@ -4,11 +4,10 @@ block content
     .container
         .row
             form.form-horizontal(method="post",action="/admin/category")
-                input(type="hidden",name="category[_id]",value="#{category._id}")
                 .form-group
                     label.col-sm-2.control-label(for="inputCategory") 电影分类
                     .col-sm-6
-                        input#inputCategory.form-control(type="text",name="category[name]")
+                        input#inputCategory.form-control(type="text",name="category[name]",value=category.name)
                 
                 .form-group
                     .col-sm-offset-6.col-sm-2

@@ -1,31 +1,13 @@
 var Category = require('../models/category');
 var _ = require('underscore');
 
-// exports.detail = function(req,res){
-//     var id = req.params.id;
-//     category.findById(id,function(err,category){
-//         Comment
-//             .find({category:id})
-//             // populate()根据from的objectId拿到catogory.name
-//             .populate('from','name')
-//             .populate('reply.from reply.to','name')
-//             .exec(function(err,comments){
-//                 console.log(comments)
-//                 res.render('detail',{
-//                     title:category.title,
-//                     category:category,
-//                     comments:comments
-//                 })
-//             })
-//     });
-// }
 
 // admin add category page
 exports.add = function(req,res){
-    res.render('admin-category',{
+    res.render('category',{
         title:'后台分类录入页',
         category:{}
-    });
+    })
 }
 
 
@@ -44,33 +26,17 @@ exports.add = function(req,res){
 //     }
 // }
 
-// amdin category post
+// amdin category save
 exports.save = function(req,res){
     var _category = req.body.category
     var category = new Category(_category)
 
-    // if(id !== 'undefined'){
-    //     category.findById(id,function(err,category){
-    //         if(err){
-    //             console.log(err)
-    //         }
-    //         _category = _.extend(category,categoryObj);
-    //         _category.save(function(err,category){
-    //             if(err){
-    //                 console.log(err)
-    //             }
-    //             res.redirect('/category/'+category._id)
-    //         })
-    //     })
-    // }else{
-
-        category.save(function(err,category){
-            if(err){
-                console.log(err)
-            }
-            res.redirect('/admin/category/list')
-        })
-    // }
+    category.save(function(err,category){
+        if(err){
+            console.log(err)
+        }
+        res.redirect('/admin/category/list')
+    })
 }
 
 // // categorylist delete 
@@ -86,11 +52,11 @@ exports.save = function(req,res){
 //     }
 // }
 
-
+// category list page
 exports.list = function(req,res){
     Category.fetch(function(err,categories){
         if(err) console.log(err)
-        res.render('admin-category-list',{
+        res.render('category-list',{
             title:'分类列表页',
             categories:categories
         })  

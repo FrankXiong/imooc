@@ -14,7 +14,6 @@ module.exports = function(app){
 
     app.get('/',Index.index)
 
-
     app.get('/signin',User.showSigninPage)
     app.get('/signup',User.showSignupPage)
     app.post('/user/signin',User.signin)

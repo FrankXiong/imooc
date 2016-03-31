@@ -1,3 +1,22 @@
+.clearfix:after { 
+  content: ".";
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden; 
+} 
+.clearfix {display: inline-block;}  
+.clearfix {
+  zoom: 1; 
+  display: block;
+}
+form{
+  overflow: hidden;
+}
+.media-body{
+  overflow: visible;
+  padding-left: 10px;
+}
 .movie-title{
     font-size: 18px;
     font-weight: 400;
@@ -23,11 +42,15 @@
     text-align: left;
 }
 .movie-info dd{
-    margin-left: 90px;
+    margin-left: 80px;
 }
 .comment-container{
     width: 720px;
 }
 .comment-container .media-list{
-    margin-top: 40px;
+    margin-top: 50px;
+}
+
+#replyCollapse .well{
+  padding-bottom: 0;
 }

@@ -12,24 +12,62 @@ block content
                         .panel-body
                             .row
                                 .col-sm-12
-                                    form(method="POST",action="/user/comment")
+                                    form#commentForm(method="POST",action="/user/comment")
                                         input(type="hidden",name="comment[movie]",value="#{movie._id}")
-                                        input(type="hidden",name="comment[from]",value="#{user._id}")
+                                        if user
+                                            input(type="hidden",name="comment[from]",value="#{user._id}")
                                         .form-group
                                             textarea.form-control(name="comment[content]",row="5",style="max-width:100%")
-                                        .col-sm-2.col-sm-offset-10
-                                            button.btn.btn-success.btn-block(type="submit") 提交
+                                        .form-group.pull-right
+                                            if user
+                                                button.btn.btn-success(type="submit") 发表评论
+                                            else
+                                                a.navbar-link(href="#",data-toggle="modal",data-target="#signinModal") 登录后评论
                             .row
                                 .col-sm-12
                                     ul.media-list
                                         each item in comments
                                             li.media
-                                                div.media-left
-                                                    a(href="#")
-                                                        img.media-object(src="",style="width:50px;height:50px;",alt="")
-                                                div.media-body
-                                                    h4.media-heading #{item.from.name}
-                                                    p #{item.content}
+                                                .col-md-1
+                                                    div.media-heading
+                                                        a(href="")
+                                                            img.media-object(src="",style="width:40px;height:40px;",alt="")
+                                                .col-md-11
+                                                    div.media-body
+                                                        .row
+                                                            h4.media-heading.pull-left #{item.from.name}
+                                                            a.comment.pull-right(href="#replyCollapse",data-toggle="collapse",aria-expanded="false",aria-controls="replyCollapse",data-cid="#{item._id}",data-tid="#{item.from._id}")
+                                                                span 回复
+                                                        .row
+                                                            p #{item.content}
+                                                        .row
+                                                            #replyCollapse.collapse
+                                                                .well
+                                                                    form#commentForm(method="POST",action="/user/comment")
+                                                                        input(type="hidden",name="comment[movie]",value="#{movie._id}")
+                                                                        if user
+                                                                            input(type="hidden",name="comment[from]",value="#{user._id}")
+                                                                        .form-group
+                                                                            textarea.form-control(name="comment[content]",row="5",style="max-width:100%")
+                                                                        .form-group.pull-right
+                                                                            if user
+                                                                                button.btn.btn-block.btn-success.btn-sm(type="submit") 发表回复
+                                                                            else
+                                                                                a.navbar-link(href="#",data-toggle="modal",data-target="#signinModal") 登录后评论
+
+                                                            if item.reply && item.reply.length > 0
+                                                                each reply in item.reply
+                                                                    li.media
+                                                                        div.media-left
+                                                                            a.comment(href="#comments",data-cid="#{item._id}",data-tid="#{item.from._id}")
+                                                                                img.media-object(src="",style="width:30px;height:30px;",alt="")
+                                                                        div.media-body
+                                                                            h5.media-heading 
+                                                                                #{reply.from.name}
+                                                                                span &nbsp;回复&nbsp;
+                                                                                #{reply.to.name}
+                                                                            p #{reply.content}
+
                                             hr
 
             .col-md-4.col-sm-offset-1
@@ -48,4 +86,4 @@ block content
                         dt 简介
                         dd= movie.summary
 
-
+    script(src="/js/detail.js")

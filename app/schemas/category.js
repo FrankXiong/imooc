@@ -1,33 +1,13 @@
-var mongoose = require('mongoose');
+var mongoose = require('mongoose')
 var Schema = mongoose.Schema
-//  使用ObjectId实现关联文档的查询
 var ObjectId = Schema.Types.ObjectId
 
-var CommentSchema = new Schema({
-    movie:{
+var CategorySchema = new Schema({
+    name:String,
+    movies:[{
         type:ObjectId,
-        // 引用MovieSchema
         ref:'Movie'
-    },
-    from:{
-        type:ObjectId,
-        ref:'User'
-    },
-    reply:[{
-        from:{
-            type:ObjectId,
-            ref:'User'
-        },
-        to:{
-            type:ObjectId,
-            ref:'User'
-        },
-        content:{
-            type:String
-        }
     }],
-    
-    content:String,
     meta:{
         createAt:{
             type:Date,
@@ -40,7 +20,7 @@ var CommentSchema = new Schema({
     }
 });
 
-CommentSchema.pre('save',function(next){
+CategorySchema.pre('save',function(next){
     if(this.isNew){
         this.meta.createAt = this.meta.updateAt = Date.now()
     }else{
@@ -49,7 +29,7 @@ CommentSchema.pre('save',function(next){
     next()
 });
 
-CommentSchema.statics = {
+CategorySchema.statics = {
     fetch:function(cb){
         return this
             .find({})
@@ -63,4 +43,4 @@ CommentSchema.statics = {
     }
 };
 
-module.exports = CommentSchema;
+module.exports = CategorySchema;

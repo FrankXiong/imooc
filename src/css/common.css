@@ -67,3 +67,31 @@ form{
 .category-group input{
   float: left;
 }
+
+.search-form{
+  float: right;
+  height: 50px;
+  line-height: 50px;
+}
+.search-form input{
+  float: right;
+  width: 200px;
+  height: 24px;
+  font-size: 12px;
+  border-radius: 3px;
+  margin-top: 14px;
+  padding-left: 10px;
+  margin-right: 10px;
+  border: 1px solid #aaa;
+}
+.search-form input:focus{
+  border:1px solid #ef5350 !important;
+}
+.search-form button{
+  background: none;
+  border: none;
+  outline: none;
+  float: right;
+  margin-top: -2px;
+  color: #999;
+}

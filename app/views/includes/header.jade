@@ -11,8 +11,16 @@
                     a.navbar-brand(href="/") 首页
                 p.navbar-text #{title}
             .col-sm-7
-                .form-group.col-sm-5.navbar-right
-                    input#searchText.input-search.form-control(name="",type="text",placeholder="搜索...")
+                .search-form
+                    form.form-inline(method='GET',action='/results')
+                        button(type="submit")
+                            span.glyphicon.glyphicon-search
+                        input(type="text",name="q")
+                //- form(method='GET',action='/results')
+                //-     .input-group.col-sm-5.pull-right
+                //-         input.form-control(name="q",type="text")
+                //-         button.input-group-addon.glyphicon.glyphicon-search(type="submit",aria-hidden="true")
+                            //- button.btn.btn-default.btn-sm(type="submit") 搜索
             .col-sm-2
                 if user
                     p.navbar-text.navbar-right

@@ -70,6 +70,13 @@ var libs = {
     ],
     css:[
         "vendor/assets/bootstrap/dist/css/bootstrap.css"
+    ],
+    font:[
+        "vendor/assets/bootstrap/dist/fonts/glyphicons-halflings-regular.eot",
+        "vendor/assets/bootstrap/dist/fonts/glyphicons-halflings-regular.svg",
+        "vendor/assets/bootstrap/dist/fonts/glyphicons-halflings-regular.ttf",
+        "vendor/assets/bootstrap/dist/fonts/glyphicons-halflings-regular.woff",
+        "vendor/assets/bootstrap/dist/fonts/glyphicons-halflings-regular.woff2"
     ]
 };
 
@@ -84,9 +91,9 @@ gulp.task("libs", function() {
     .pipe(gulp.dest('dist/static/css'))
     .pipe(notify({ message: 'Libs-Stylesheets task complete!' }));
 
-  // gulp.src(libs.font)
-  //   .pipe(gulp.dest('dist/static/fonts'))
-  //   .pipe(notify({ message: 'Libs-Fonts task complete!' }));
+  gulp.src(libs.font)
+    .pipe(gulp.dest('dist/static/fonts'))
+    .pipe(notify({ message: 'Libs-Fonts task complete!' }));
 });
 
 // gulp.task("data", function() {

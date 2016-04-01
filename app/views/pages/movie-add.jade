@@ -49,11 +49,11 @@ block content
                     .form-group
                         label.col-sm-2.control-label(for="inputFlash") 片源地址
                         .col-sm-6
-                            input#inputFlash.form-control(type="text",name="movie[flash]",value=movie.poster)
+                            input#inputFlash.form-control(type="text",name="movie[flash]",value=movie.flash)
                     .form-group
                         label.col-sm-2.control-label(for="inputSummary") 电影简介
                         .col-sm-6
-                            textarea#inputSummary.form-control(name="movie[summary]",rows="8",value=movie.summary)
+                            textarea#inputSummary.form-control(name="movie[summary]",rows="8")= movie.summary
                     
                     .form-group
                         .col-sm-offset-6.col-sm-2

@@ -1,0 +1,24 @@
+extends ../layout
+
+block content
+    .container
+        .row
+            .panel.panel-default
+                .panel-heading 电影操作
+                .panel-body
+                    .list-group
+                        .list-group-item 
+                            a(href="/admin/movie/add") 添加电影
+                        .list-group-item
+                            a(href="/admin/movie/list") 查看电影列表
+                        .list-group-item
+                            a(href="/admin/category/add") 添加电影分类
+                        .list-group-item
+                            a(href="/admin/category/list") 查看电影分类列表
+            .panel.panel-default
+                .panel-heading 用户操作
+                .panel-body
+                    .list-group
+                        .list-group-item 
+                            a(href="/admin/user/list") 查看用户列表
+            

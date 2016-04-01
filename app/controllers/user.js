@@ -120,3 +120,10 @@ exports.adminRequired = function(req,res,next){
     }
     next()
 }
+
+//admin page
+exports.admin = function(req,res){
+    res.render('admin',{
+        title:'管理员面板',
+    })
+}

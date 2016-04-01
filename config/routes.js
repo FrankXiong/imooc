@@ -31,6 +31,8 @@ module.exports = function(app){
 
     app.post('/user/comment',User.signinRequired,Comment.save)
 
+    app.get('/admin',User.signinRequired,User.adminRequired,User.admin)
+
     app.get('/admin/category/add',User.signinRequired,User.adminRequired,Category.add)
     app.post('/admin/category',User.signinRequired,User.adminRequired,Category.save)
     app.get('/admin/category/list',User.signinRequired,User.adminRequired,Category.list)

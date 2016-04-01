@@ -4,7 +4,7 @@ var _ = require('underscore');
 
 // admin add category page
 exports.add = function(req,res){
-    res.render('category',{
+    res.render('category-add',{
         title:'后台分类录入页',
         category:{}
     })
